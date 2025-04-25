@@ -41,6 +41,45 @@ COUT=(A&B) | (CIN&(A^B))
 
 ## Creating Source Codes 
 
+ADDER
+
+    module full_adder(A,B,CIN,S,COUT);
+    input A,B,CIN;
+    output S,COUT;
+    assign S=A^B^CIN;
+    assign COUT=(A&B) | (CIN&(A^B));
+    endmodule
+
+4-BIT ADDER
+
+    module fulladd_4bit(A,B,C0,S,C4);
+    input [3:0] A,B;
+    input C0;
+    output [3:0] S;
+    output C4;
+    wire C1,C2,C3;
+    full_adder fa0 (A[0],B[0],C0,S[0],C1);
+    full_adder fa1 (A[1],B[1],C1,S[1],C2);
+    full_adder fa2 (A[2],B[2],C2,S[2],C3);
+    full_adder fa3 (A[3],B[3],C3,S[3],C4);
+    endmodule
+
+TEST
+
+    module test_4bit; reg [3:0] A;
+    reg [3:0] B; reg C0; wire [3:0] S; wire C4; module test_4bit;
+    reg [3:0] A;
+    reg [3:0] B; reg C0; wire [3:0] S; wire C4;
+    fulladd_4bit dut (A,B,C0,S,C4); initial
+    begin A=4'b0011;B=4'b0011;C0=1'b0;
+    #10; A=4'b1011;B=4'b0111;C0=1'b1;
+    #10; A=4'b1111;B=4'b1111;C0=1'b1;
+    #10;
+    end initial
+    #50
+    $finish;
+    endmodule    
+
 	In the Terminal, type gedit <filename>.v (ex: gedit 4bitadder.v). 
 
 	A Blank Document opens up into which the following source code can be typed down. 
@@ -74,6 +113,8 @@ Developed by: Register Number*/
 
 ### Fig 3:Invoke the Cadence Environment
 
+![WhatsApp Image 2025-04-26 at 00 01 03_83d69aaf](https://github.com/user-attachments/assets/018fa3a4-6793-4527-8452-c0a77b75e9ab)
+
 	To Launch Simulation tool 
 
 •	linux:/> nclaunch -new& // “-new” option is used for invoking NCVERILOG for the first time for any design 
@@ -85,12 +126,14 @@ or
 	It will invoke the nclaunch window for functional simulation we can compile,elaborate and simulate it using Multiple Step .
 
 ### Fig 4:Setting Multi-step simulation
+![WhatsApp Image 2025-04-26 at 00 01 03_83d69aaf](https://github.com/user-attachments/assets/bcc01c3a-9fe9-4ae2-be15-d948cecd4325)
 
 	Select Multiple Step and then select “Create cds.lib File” .
 
 	Click the cds.lib file and save the file by clicking on Save option 
 
 ### Fig 5:cds.lib file Creation
+![WhatsApp Image 2025-04-26 at 00 01 05_1b8bcb43](https://github.com/user-attachments/assets/e8532b9f-eb43-46f4-ab0f-1dcae0122593)
 
 	Save cds.lib file and select the correct option for cds.lib file format based on the HDL Language and Libraries used. 
 
@@ -111,6 +154,7 @@ or
 	Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation .
 
 	To perform the function simulation, the following three steps are involved Compilation, Elaboration and Simulation. 
+![Screenshot 2025-04-26 000513](https://github.com/user-attachments/assets/395eaaa3-8471-4094-8bc5-ab7eb8dc41db)
 
 ### Fig 7: Nclaunch Window
 
@@ -130,6 +174,7 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 Left side select the file and in Tools : launch verilog compiler with current selection will get enable. Click it to compile the code 
 
 Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation
+![WhatsApp Image 2025-04-26 at 00 01 04_fbe4cbd9](https://github.com/user-attachments/assets/37af72d8-f6dc-4b9c-a54d-685f3eeddfe9)
 
 ### Fig 8: Compiled database in worklib
 
@@ -153,6 +198,7 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 5.	It also establishes net connectivity and prepares all of this for simulation
    
 	After elaboration the file will come under snapshot. Select the test bench and elaborate it.
+![WhatsApp Image 2025-04-26 at 00 01 04_fbe4cbd9](https://github.com/user-attachments/assets/3105291f-82e5-457f-9459-f59c05afbca7)
 
 ### Fig 9: Elaboration Launch Option
 
@@ -165,12 +211,16 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 	Simulation allow to dump design and test bench signals into a waveform 
 
 	Steps for simulation – Run the simulation command with simulator options
+![WhatsApp Image 2025-04-26 at 00 01 03_93c49db4](https://github.com/user-attachments/assets/3c6ab104-6d84-4996-87a6-312a49c8bce9)
 
 ### Fig 10: Design Browser window for simulation
+![WhatsApp Image 2025-04-26 at 00 01 04_8ecc732c](https://github.com/user-attachments/assets/46d7c5d7-29f7-4967-bb57-080406e9b917)
 
 ### Fig 11: Launching Simulation Waveform WindowSimulation Waveform Window
+![WhatsApp Image 2025-04-26 at 00 01 04_a0ef3a5c](https://github.com/user-attachments/assets/b2b45c30-73f7-455d-81ab-def5364452cf)
 
 ### Fig 12: Simulation Waveform Window
+![image](https://github.com/user-attachments/assets/1b25037c-b8ee-40d4-9c8b-a6cfad91daab)
 
 ### Result:
 
